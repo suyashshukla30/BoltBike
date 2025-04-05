@@ -13,9 +13,8 @@
         android:theme="@style/Theme.BoltBike"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
+            android:name=".Presentation.views.MainActivity"
             android:exported="true"
-            android:label="@string/app_name"
             android:theme="@style/Theme.BoltBike">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

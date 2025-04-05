@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "714137728914",
+    "project_id": "rideon-india",
+    "storage_bucket": "rideon-india.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:714137728914:android:88251f80754bbd7119b34b",
+        "android_client_info": {
+          "package_name": "com.bikerenting.yash.boltbike"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA-Mwx9Fr1mVBXFGT1N-eabVkEdt-sgA7c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

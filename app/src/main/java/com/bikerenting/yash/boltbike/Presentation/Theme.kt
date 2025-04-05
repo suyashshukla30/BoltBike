@@ -1,6 +1,5 @@
-package com.bikerenting.yash.boltbike.ui.theme
+package com.bikerenting.yash.boltbike.Presentation
 
-import android.app.Activity
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme

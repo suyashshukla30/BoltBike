@@ -1,4 +1,4 @@
-package com.bikerenting.yash.boltbike.ui.theme
+package com.bikerenting.yash.boltbike.Presentation
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
