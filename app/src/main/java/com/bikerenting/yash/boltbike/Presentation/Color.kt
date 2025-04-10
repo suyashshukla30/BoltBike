@@ -2,18 +2,25 @@ package com.bikerenting.yash.boltbike.Presentation
 
 import androidx.compose.ui.graphics.Color
 
-// Primary Colors
-val BrightOrange = Color(0xFFFF6F00)  // Primary color for CTAs and buttons
+// Primary Colors, cards border when selected(placeholder border too)
+val BrightOrange = Color(0xFFFF6F00)
+// Primary color for CTAs and buttons
 val TextDark = Color(0xFF1A1A1A)
 
-// Light Gray - Used for cards, input fields, backgrounds
+// Light Gray -  cards border when not selected(placeholder border too)
 val LightGray = Color(0xFFF5F5F5)
 
-// Soft White Background
+// Soft White Background, Used for cards, input fields.
 val BackgroundWhite = Color(0xFFFDFDFD)
+
+// Button text color when primary color is used in background.
+val ButtonTextWhite = Color(0xFFFDFDFD)
 
 // Placeholder Text / Secondary Text
 val TextSecondary = Color(0xFF808080)
+
+// Placeholder Text / Secondary Text(use only  when, inverse icon, with app name, and user need too feed data)
+val TextBlack = Color(0xFF000000)
 
 // Icon and Divider Gray
 val DividerGray = Color(0xFFE0E0E0)

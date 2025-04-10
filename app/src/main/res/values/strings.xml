@@ -2,4 +2,6 @@
     <string name="app_name">RideOn</string>
     <string name="punch_line">Wheels Within Budget.</string>
     <string name="title_activity_login">LoginActivity</string>
+    <string name="login">Login</string>
+    <string name="send_otp">Send OTP</string>
 </resources>

@@ -39,40 +39,41 @@ fun SplashScreen() {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Image(
-                painter = painterResource(id = R.drawable.bike_main_icon), // Put your logo in res/drawable
+                painter = painterResource(id = R.drawable.bike_main_icon),
                 contentDescription = "RideOn Logo",
                 modifier = Modifier
                     .size(150.dp)
                     .scaleInAnimation()
             )
-            Spacer(modifier = Modifier.height(20.dp))
+
+            Spacer(modifier = Modifier.height(24.dp))
 
             Text(
                 text = stringResource(R.string.app_name),
-                fontSize = 24.sp,
-                fontWeight = FontWeight.Bold,
+                fontSize = 32.sp,
+                fontWeight = FontWeight.ExtraBold,
                 color = Color.White
             )
 
-            Spacer(modifier = Modifier.height(10.dp))
+            Spacer(modifier = Modifier.height(8.dp))
 
             Text(
                 text = stringResource(R.string.punch_line),
-                fontSize = 21.sp,
-                fontWeight = FontWeight.Bold,
+                fontSize = 18.sp,
+                fontWeight = FontWeight.Medium,
                 color = Color.White
             )
-
         }
     }
 }
+
 
 @Composable
 fun Modifier.scaleInAnimation(): Modifier {
     val scale = remember { Animatable(0f) }
     LaunchedEffect(Unit) {
         scale.animateTo(
-            targetValue = 1.5f,
+            targetValue = 1.27f,
             animationSpec = tween(durationMillis = 2000, easing = EaseOutBack)
         )
     }
