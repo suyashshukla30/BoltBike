@@ -1,6 +1,7 @@
 package com.bikerenting.yash.boltbike.Presentation.ui
 
 import android.app.Activity
+import android.content.Intent
 import android.widget.Toast
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
@@ -36,6 +37,7 @@ import com.bikerenting.yash.boltbike.Presentation.BrightOrange
 import com.bikerenting.yash.boltbike.Presentation.ButtonTextWhite
 import com.bikerenting.yash.boltbike.Presentation.TextBlack
 import com.bikerenting.yash.boltbike.Presentation.viewmodel.LoginViewModel
+import com.bikerenting.yash.boltbike.Presentation.views.MainNavigationActivity
 
 @Composable
 fun LoginScreen() {
@@ -52,10 +54,17 @@ fun LoginScreen() {
 
     LaunchedEffect(Unit) {
         viewModel.toastMessage.collect { message ->
+
             Toast.makeText(context, message, Toast.LENGTH_LONG).show()
         }
     }
-
+    LaunchedEffect(Unit) {
+        viewModel.navigateToHome.collect {
+            val intent = Intent(context, MainNavigationActivity::class.java)
+            context.startActivity(intent)
+            (context as Activity).finish() // optional: remove login screen
+        }
+    }
     LoginContent(
         phoneNumber = phoneNumber,
         onPhoneNumberChange = viewModel::onPhoneNumberChange,

@@ -33,6 +33,9 @@ class LoginViewModel : ViewModel() {
     private val _isLoading = MutableStateFlow(false)
     val isLoading: StateFlow<Boolean> = _isLoading
 
+    private val _navigateToHome = MutableSharedFlow<Unit>()
+    val navigateToHome = _navigateToHome.asSharedFlow()
+
 
     fun onPhoneNumberChange(newNumber: String) {
         _phoneNumber.value = newNumber
@@ -60,6 +63,7 @@ class LoginViewModel : ViewModel() {
                 override fun onVerificationFailed(e: FirebaseException) {
                     Log.e("PhoneAuth", "Failed: ${e.localizedMessage}")
                     viewModelScope.launch {
+                        _isLoading.value = false
                         _toastMessage.emit("Failed: ${e.localizedMessage}")
                     }
                 }
@@ -70,6 +74,7 @@ class LoginViewModel : ViewModel() {
                 ) {
                     verificationId = id
                     _isOtpPhase.value = true
+                    _isLoading.value = false
                     viewModelScope.launch {
                         _toastMessage.emit("Success: OTP SENT")
                     }
@@ -99,9 +104,12 @@ class LoginViewModel : ViewModel() {
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     viewModelScope.launch {
+                        _navigateToHome.emit(Unit)
                         _toastMessage.emit("WELCOME")
+                        _isLoading.value = false
                     }
                 } else {
+                    _isLoading.value = false
                     _isOtpPhase.value = false
                     viewModelScope.launch {
                         _toastMessage.emit("Sign in failed: ${task.exception?.localizedMessage}")
