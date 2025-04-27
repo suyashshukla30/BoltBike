@@ -33,6 +33,7 @@ import com.bikerenting.yash.boltbike.Presentation.TextSecondary
 import com.bikerenting.yash.boltbike.R
 import androidx.compose.foundation.interaction.collectIsFocusedAsState
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.text.TextStyle
 import com.bikerenting.yash.boltbike.Presentation.BrightOrange
 import com.bikerenting.yash.boltbike.Presentation.ButtonTextWhite
 import com.bikerenting.yash.boltbike.Presentation.TextBlack
@@ -62,7 +63,7 @@ fun LoginScreen() {
         viewModel.navigateToHome.collect {
             val intent = Intent(context, MainNavigationActivity::class.java)
             context.startActivity(intent)
-            (context as Activity).finish() // optional: remove login screen
+            (context as Activity).finish()
         }
     }
     LoginContent(
@@ -227,6 +228,7 @@ fun PhoneNumberInput(
             placeholder = { Text("Enter phone number", color = TextSecondary) },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
             singleLine = true,
+            textStyle = TextStyle(color = Color.Black),
             modifier = Modifier.fillMaxWidth(),
             interactionSource = interactionSource,
             colors = OutlinedTextFieldDefaults.colors(
@@ -254,6 +256,7 @@ fun OtpInputField(
         placeholder = { Text("Enter OTP", color = TextSecondary) },
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
         singleLine = true,
+        textStyle = TextStyle(color = Color.Black),
         modifier = Modifier
             .fillMaxWidth()
             .height(56.dp)
@@ -274,5 +277,14 @@ fun OtpInputField(
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun LoginScreenPreview() {
-    LoginScreen()
+    LoginContent(
+        phoneNumber = "",
+        onPhoneNumberChange = {},
+        onSendOtpClick = {},
+        isOtpPhase = false,
+        otpCode = "",
+        onOtpCodeChange = {},
+        isLoading = false
+    )
+
 }

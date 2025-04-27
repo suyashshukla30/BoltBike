@@ -89,8 +89,6 @@ class LoginViewModel : ViewModel() {
         val otp = _otpCode.value
         val id = verificationId
         _isLoading.value = true
-/*        // do the work...
-        delay(2000) // simulate network*/
         if (!otp.isNullOrBlank() && !id.isNullOrBlank()) {
             val credential = PhoneAuthProvider.getCredential(id, otp)
             signInWithCredential(credential)

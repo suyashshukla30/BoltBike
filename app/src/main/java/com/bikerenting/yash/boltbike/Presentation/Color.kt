@@ -44,6 +44,12 @@ val PurpleGrey40 = Color(0xFF625B71)
 val Pink40 = Color(0xFF7D5260)
 
 
+// --- Typography Specific Colors (🔠 Headings, Subheadings, Body Text, Muted Text) ---
+val HeadingMain = Color(0xFF333333)    // Navy Blue (#1E3A8A) - Main Headings (H1, Page Titles)
+val Subheading = NavyAccent    // Subheadings (H2, Sections)
+val BodyText = Color(0xFF000000)        // Black (#000000) - Body Text (General Content)
+val MutedText = Color(0xFF777777)       // Gray (#777777) - Muted Text (Placeholders, Labels, Descriptions)
+
 
 
 
