@@ -24,7 +24,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.bikerenting.yash.boltbike.Presentation.BrightOrange
+import com.bikerenting.yash.boltbike.Presentation.SplashBackground
+import com.bikerenting.yash.boltbike.Presentation.TextPrimary
 import com.bikerenting.yash.boltbike.R
 
 @Composable
@@ -32,7 +33,7 @@ fun SplashScreen() {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(color = BrightOrange),
+            .background(color = SplashBackground),
         contentAlignment = Alignment.Center
     ) {
         Column(
@@ -52,7 +53,7 @@ fun SplashScreen() {
                 text = stringResource(R.string.app_name),
                 fontSize = 32.sp,
                 fontWeight = FontWeight.ExtraBold,
-                color = Color.White
+                color = TextPrimary
             )
 
             Spacer(modifier = Modifier.height(8.dp))
@@ -61,7 +62,8 @@ fun SplashScreen() {
                 text = stringResource(R.string.punch_line),
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Medium,
-                color = Color.White
+                color = TextPrimary
+
             )
         }
     }

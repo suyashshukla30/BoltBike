@@ -26,17 +26,16 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.bikerenting.yash.boltbike.Presentation.BackgroundWhite
 import com.bikerenting.yash.boltbike.Presentation.DividerGray
-import com.bikerenting.yash.boltbike.Presentation.LightGray
 import com.bikerenting.yash.boltbike.Presentation.TextSecondary
 import com.bikerenting.yash.boltbike.R
 import androidx.compose.foundation.interaction.collectIsFocusedAsState
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.text.TextStyle
-import com.bikerenting.yash.boltbike.Presentation.BrightOrange
-import com.bikerenting.yash.boltbike.Presentation.ButtonTextWhite
-import com.bikerenting.yash.boltbike.Presentation.TextBlack
+import com.bikerenting.yash.boltbike.Presentation.AppBackground
+import com.bikerenting.yash.boltbike.Presentation.BorderGray
+import com.bikerenting.yash.boltbike.Presentation.PrimaryOrange
+import com.bikerenting.yash.boltbike.Presentation.TextPrimary
 import com.bikerenting.yash.boltbike.Presentation.viewmodel.LoginViewModel
 import com.bikerenting.yash.boltbike.Presentation.views.MainNavigationActivity
 
@@ -56,7 +55,7 @@ fun LoginScreen() {
     LaunchedEffect(Unit) {
         viewModel.toastMessage.collect { message ->
 
-            Toast.makeText(context, message, Toast.LENGTH_LONG).show()
+            Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
         }
     }
     LaunchedEffect(Unit) {
@@ -96,7 +95,7 @@ fun LoginContent(
 ) {
     val interactionSource = remember { MutableInteractionSource() }
     val isFocused by interactionSource.collectIsFocusedAsState()
-    val borderColor = if (isFocused) BrightOrange else LightGray
+    val borderColor = if (isFocused) PrimaryOrange else BorderGray
 
     val rotationAngle by animateFloatAsState(
         targetValue = if (isOtpPhase) 180f else 0f, animationSpec = tween(1000), label = "rotationY"
@@ -108,7 +107,7 @@ fun LoginContent(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(color = BackgroundWhite)
+            .background(color = AppBackground)
             .padding(horizontal = 24.dp), contentAlignment = Alignment.Center
     ) {
         Column(
@@ -129,7 +128,7 @@ fun LoginContent(
                 text = stringResource(R.string.app_name),
                 fontSize = 40.sp,
                 fontWeight = FontWeight.Bold,
-                color = TextBlack
+                color = TextPrimary
             )
 
             Spacer(modifier = Modifier.height(12.dp))
@@ -138,7 +137,7 @@ fun LoginContent(
                 text = if (isOtpPhase) "Verify" else stringResource(R.string.login),
                 fontSize = 22.sp,
                 fontWeight = FontWeight.SemiBold,
-                color = TextBlack
+                color = TextPrimary
             )
 
             // 3D Flip Effect
@@ -176,7 +175,7 @@ fun LoginContent(
                     .height(50.dp),
                 shape = RoundedCornerShape(12.dp),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = BrightOrange, contentColor = ButtonTextWhite
+                    containerColor = PrimaryOrange, contentColor = AppBackground
                 )
             ) {
                 CommonLoader().LoaderButtonContent(
@@ -204,12 +203,12 @@ fun PhoneNumberInput(
             .height(56.dp)
             .clip(RoundedCornerShape(12.dp))
             .border(2.dp, borderColor, RoundedCornerShape(12.dp))
-            .background(color = BackgroundWhite)
+            .background(color = AppBackground)
             .padding(horizontal = 16.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
-            text = "IN (+91)", fontWeight = FontWeight.SemiBold, fontSize = 14.sp, color = TextBlack
+            text = "IN (+91)", fontWeight = FontWeight.SemiBold, fontSize = 14.sp, color = TextPrimary
         )
 
         Spacer(modifier = Modifier.width(12.dp))
@@ -262,7 +261,7 @@ fun OtpInputField(
             .height(56.dp)
             .clip(RoundedCornerShape(12.dp))
             .border(2.dp, borderColor, RoundedCornerShape(12.dp))
-            .background(color = BackgroundWhite)
+            .background(color = AppBackground)
             .padding(horizontal = 16.dp),
         interactionSource = interactionSource,
         colors = OutlinedTextFieldDefaults.colors(

@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -17,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -24,8 +26,10 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.bikerenting.yash.boltbike.Domain.Model.MainNavigationItems
-import com.bikerenting.yash.boltbike.Presentation.BackgroundWhite
+import com.bikerenting.yash.boltbike.Presentation.AppBackground
 import com.bikerenting.yash.boltbike.Presentation.BoltBikeTheme
+import com.bikerenting.yash.boltbike.Presentation.MutedComponents
+import com.bikerenting.yash.boltbike.Presentation.PrimaryOrange
 import com.bikerenting.yash.boltbike.Presentation.ui.BookingsScreen
 import com.bikerenting.yash.boltbike.Presentation.ui.ExploreScreen
 import com.bikerenting.yash.boltbike.Presentation.ui.HomeScreen
@@ -49,7 +53,6 @@ class MainNavigationActivity : ComponentActivity() {
                         navController = navController,
                         startDestination = MainNavigationItems.Home.route,
                         modifier = Modifier.padding(innerPadding)
-                            .background(color = BackgroundWhite)
                     ) {
                         composable(MainNavigationItems.Home.route) { HomeScreen() }
                         composable(MainNavigationItems.Profile.route) { ProfileScreen() }
@@ -68,13 +71,16 @@ class MainNavigationActivity : ComponentActivity() {
         val fontAwesome = FontFamily(
             Font(R.font.font_awesome_solid) // assuming you placed fa_solid.otf in res/font/
         )
-        NavigationBar {
+        NavigationBar(
+            containerColor = AppBackground,
+            tonalElevation = 8.dp
+        ) {
             val currentBackStackEntry = navController.currentBackStackEntryAsState().value
             val currentRoute = currentBackStackEntry?.destination?.route
-
             items.forEach { item ->
+                val selected = currentRoute == item.route
                 NavigationBarItem(
-                    selected = currentRoute == item.route,
+                    selected = selected,
                     onClick = {
                         if (currentRoute != item.route) {
                             navController.navigate(item.route) {
@@ -90,10 +96,23 @@ class MainNavigationActivity : ComponentActivity() {
                         Text(
                             text = item.icon,
                             fontFamily = fontAwesome,
-                            fontSize = 20.sp
+                            fontSize = 20.sp,
+                            color = if (selected) PrimaryOrange else MutedComponents
                         )
                     },
-                    label = { Text(text = item.label) }
+                    label = {
+                        Text(
+                            text = item.label,
+                            color = if (selected) PrimaryOrange else MutedComponents
+                        )
+                    },
+                    colors = NavigationBarItemDefaults.colors(
+                        indicatorColor = PrimaryOrange.copy(alpha = 0.1f), // subtle background for selected
+                        selectedIconColor = PrimaryOrange,
+                        unselectedIconColor = MutedComponents,
+                        selectedTextColor = PrimaryOrange,
+                        unselectedTextColor = MutedComponents
+                    )
                 )
             }
         }

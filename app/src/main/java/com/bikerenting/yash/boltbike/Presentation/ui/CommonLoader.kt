@@ -8,15 +8,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.bikerenting.yash.boltbike.Presentation.ButtonTextWhite
+import com.bikerenting.yash.boltbike.Presentation.AppBackground
 
 class CommonLoader {
     @Composable
     fun LoaderButtonContent(
         isLoading: Boolean,
         text: String,
-        textColor: Color = ButtonTextWhite,
-        loaderColor: Color = ButtonTextWhite
+        textColor: Color = AppBackground,
+        loaderColor: Color = AppBackground
     ) {
         if (isLoading) {
             CircularProgressIndicator(

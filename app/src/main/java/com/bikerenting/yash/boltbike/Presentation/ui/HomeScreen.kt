@@ -27,6 +27,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CardElevation
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -46,13 +47,9 @@ import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
 import com.bikerenting.yash.boltbike.Core.SampleData
 import com.bikerenting.yash.boltbike.Domain.Model.Vehicle
-import com.bikerenting.yash.boltbike.Presentation.BackgroundWhite
-import com.bikerenting.yash.boltbike.Presentation.BrightOrange
-import com.bikerenting.yash.boltbike.Presentation.ButtonTextWhite
-import com.bikerenting.yash.boltbike.Presentation.HeadingMain
-import com.bikerenting.yash.boltbike.Presentation.NavyAccent
-import com.bikerenting.yash.boltbike.Presentation.TextBlack
-import com.bikerenting.yash.boltbike.Presentation.TextDark
+import com.bikerenting.yash.boltbike.Presentation.AppBackground
+import com.bikerenting.yash.boltbike.Presentation.PrimaryOrange
+import com.bikerenting.yash.boltbike.Presentation.TextPrimary
 import com.bikerenting.yash.boltbike.Presentation.TextSecondary
 import com.bikerenting.yash.boltbike.Presentation.viewmodel.MainListingViewModel
 import com.bikerenting.yash.boltbike.R
@@ -66,7 +63,7 @@ fun HomeScreen() {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(color = BackgroundWhite)
+            .background(color = MaterialTheme.colorScheme.background)
     ) {
         Column {
             HeaderView(
@@ -143,10 +140,10 @@ fun BikeCard(vehicle: Vehicle) {
                         modifier = Modifier.weight(1f)
                     )
                     Button(
-                        onClick = { /* TODO */ },
+                        onClick = { },
                         shape = RoundedCornerShape(32),
-                        modifier = Modifier.padding(vertical = 4.dp), // added dynamic padding instead of fixed height
-                        colors = ButtonDefaults.buttonColors(containerColor = BrightOrange)
+                        modifier = Modifier.padding(vertical = 4.dp),
+                        colors = ButtonDefaults.buttonColors(containerColor = PrimaryOrange)
                     ) {
                         Text(
                             text = "Book",
@@ -177,7 +174,7 @@ fun HeaderView(
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .background(color = BackgroundWhite)
+            .background(color = AppBackground)
             .padding(horizontal = 24.dp), contentAlignment = Alignment.Center
     ) {
         Column(modifier = Modifier.align(alignment = Alignment.CenterStart)) {
@@ -186,7 +183,7 @@ fun HeaderView(
                 text = user_name,
                 fontWeight = FontWeight.SemiBold,
                 fontSize = 24.sp,
-                color = HeadingMain
+                color = TextPrimary
             )
             Spacer(modifier = Modifier.height(3.dp))
 
@@ -195,7 +192,7 @@ fun HeaderView(
                 text = user_current_location,
                 fontWeight = FontWeight.Normal,
                 fontSize = 12.sp,
-                color = NavyAccent
+                color = TextSecondary
             )
             Spacer(modifier = Modifier.height(6.dp))
 
@@ -298,7 +295,7 @@ fun MainListScreenPreview() {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(BackgroundWhite)
+            .background(AppBackground)
     ) {
         HeaderView(
             context = LocalContext.current,
