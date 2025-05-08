@@ -211,14 +211,14 @@ private fun HeaderView(
                 Box(
                     contentAlignment = Alignment.Center,
                     modifier = Modifier
-                        .size(52.dp) // little bigger button
+                        .size(52.dp)
                         .padding(start = 6.dp)
                         .background(
                             color = Color(0xFFF0F0F0),
                             shape = RoundedCornerShape(12.dp)
                         )
                         .clickable {
-                            Toast.makeText(context, "gd", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, "Filter clicked", Toast.LENGTH_SHORT).show()
                         }
                 ) {
                     Text(
