@@ -4,106 +4,32 @@ import com.bikerenting.yash.boltbike.Domain.Model.Location
 import com.bikerenting.yash.boltbike.Domain.Model.Vehicle
 
 public class SampleData {
+    val baseUrl = "http://192.168.1.1:8080"
     val sampleBikes = listOf(
         Vehicle(
             bikeId = "bike_001",
-            type = "Scooter",
-            brand = "Honda Activa",
-            numberPlate = "DL5S1234",
-            currentLocation = Location(28.61, 77.23, "Main Gate Parking"),
-            status = "available",
-            pricePerKm = 3.0,
-            imageUrl = "https://images.unsplash.com/photo-1449426468159-d96dbf08f19f?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8bW90b3JiaWtlfGVufDB8fDB8fHww"
-        ),
-        Vehicle(
-            bikeId = "bike_002",
-            type = "Scooter",
-            brand = "Honda Activa2",
-            numberPlate = "DL5S1234",
-            currentLocation = Location(28.61, 77.23, "Main Gate Parking"),
-            status = "available",
-            pricePerKm = 3.7,
-            imageUrl = "https://images.unsplash.com/photo-1449426468159-d96dbf08f19f?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8bW90b3JiaWtlfGVufDB8fDB8fHww"
-        ),
-        Vehicle(
-            bikeId = "bike_002",
-            type = "Scooter",
-            brand = "Honda Activa2",
-            numberPlate = "DL5S1234",
-            currentLocation = Location(28.61, 77.23, "Main Gate Parking"),
-            status = "available",
-            pricePerKm = 3.7,
-            imageUrl = "https://images.unsplash.com/photo-1449426468159-d96dbf08f19f?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8bW90b3JiaWtlfGVufDB8fDB8fHww"
-        ),
-        Vehicle(
-            bikeId = "bike_002",
-            type = "Scooter",
-            brand = "Honda Activa2",
-            numberPlate = "DL5S1234",
-            currentLocation = Location(28.61, 77.23, "Main Gate Parking"),
-            status = "available",
-            pricePerKm = 3.7,
-            imageUrl = "https://images.unsplash.com/photo-1449426468159-d96dbf08f19f?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8bW90b3JiaWtlfGVufDB8fDB8fHww"
-        ),
-        Vehicle(
-            bikeId = "bike_002",
-            type = "Scooter",
-            brand = "Honda Activa2",
-            numberPlate = "DL5S1234",
-            currentLocation = Location(28.61, 77.23, "Main Gate Parking"),
-            status = "available",
-            pricePerKm = 3.7,
-            imageUrl = "https://images.unsplash.com/photo-1449426468159-d96dbf08f19f?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8bW90b3JiaWtlfGVufDB8fDB8fHww"
-        ),
-        Vehicle(
-            bikeId = "bike_002",
-            type = "Scooter",
-            brand = "Honda Activa2",
-            numberPlate = "DL5S1234",
-            currentLocation = Location(28.61, 77.23, "Main Gate Parking"),
-            status = "available",
-            pricePerKm = 3.7,
-            imageUrl = "https://images.unsplash.com/photo-1449426468159-d96dbf08f19f?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8bW90b3JiaWtlfGVufDB8fDB8fHww"
-        ),
-        Vehicle(
-            bikeId = "bike_002",
-            type = "Scooter",
-            brand = "Honda Activa2",
-            numberPlate = "DL5S1234",
-            currentLocation = Location(28.61, 77.23, "Main Gate Parking"),
-            status = "available",
-            pricePerKm = 3.7,
-            imageUrl = "https://images.unsplash.com/photo-1449426468159-d96dbf08f19f?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8bW90b3JiaWtlfGVufDB8fDB8fHww"
-        ),
-        Vehicle(
-            bikeId = "bike_002",
-            type = "Scooter",
-            brand = "Honda Activa2",
-            numberPlate = "DL5S1234",
-            currentLocation = Location(28.61, 77.23, "Main Gate Parking"),
-            status = "available",
-            pricePerKm = 3.7,
-            imageUrl = "https://images.unsplash.com/photo-1449426468159-d96dbf08f19f?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8bW90b3JiaWtlfGVufDB8fDB8fHww"
-        ),
-        Vehicle(
-            bikeId = "bike_002",
-            type = "Scooter",
-            brand = "Honda Activa2",
-            numberPlate = "DL5S1234",
-            currentLocation = Location(28.61, 77.23, "Main Gate Parking"),
-            status = "available",
-            pricePerKm = 3.7,
-            imageUrl = "https://images.unsplash.com/photo-1449426468159-d96dbf08f19f?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8bW90b3JiaWtlfGVufDB8fDB8fHww"
-        ),
-        Vehicle(
-            bikeId = "bike_002",
-            type = "Scooter",
-            brand = "Honda Activa2",
-            numberPlate = "DL5S1234",
-            currentLocation = Location(28.61, 77.23, "Main Gate Parking"),
-            status = "available",
-            pricePerKm = 3.7,
-            imageUrl = "https://images.unsplash.com/photo-1449426468159-d96dbf08f19f?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8bW90b3JiaWtlfGVufDB8fDB8fHww"
+            model = "Suzuki Access",
+            2.57,
+            4.44,
+            4.44,
+            "hostel a01",
+            "scooty",
+            "DL2S4881",
+            "Parkin 2",
+            "avail",
+            "https://images.unsplash.com/photo-1449426468159-d96dbf08f19f?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=458129",
+        ), Vehicle(
+            bikeId = "bike_091",
+            model = "Suzuki Access",
+            232.57,
+            4.64,
+            4.44,
+            "hostel a01",
+            "scooty",
+            "DL2S4881",
+            "Parkin 2",
+            "avail",
+            "https://images.unsplash.com/photo-1449426468159-d96dbf08f19f?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=458129",
         )
     )
 }

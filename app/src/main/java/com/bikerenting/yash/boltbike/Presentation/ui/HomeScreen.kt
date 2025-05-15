@@ -15,26 +15,25 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.requiredHeight
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.CardElevation
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
@@ -47,23 +46,24 @@ import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
 import com.bikerenting.yash.boltbike.Core.SampleData
 import com.bikerenting.yash.boltbike.Domain.Model.Vehicle
-import com.bikerenting.yash.boltbike.Presentation.AppBackground
-import com.bikerenting.yash.boltbike.Presentation.PrimaryOrange
-import com.bikerenting.yash.boltbike.Presentation.TextPrimary
-import com.bikerenting.yash.boltbike.Presentation.TextSecondary
+import com.bikerenting.yash.boltbike.Presentation.viewmodel.HomeViewModel
 import com.bikerenting.yash.boltbike.Presentation.viewmodel.MainListingViewModel
 import com.bikerenting.yash.boltbike.R
-import java.util.Objects
 
 @Composable
 fun HomeScreen() {
     val bike_list_ViewModel = remember { MainListingViewModel() }
     val context = LocalContext.current
+    val home_view_model = remember { HomeViewModel() }
 
+    val bikeList by home_view_model.bikes.collectAsState()
+    LaunchedEffect(Unit) {
+        home_view_model.getBikeList() // Fetch bikes on first composition
+    }
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(color = MaterialTheme.colorScheme.background)
+            .background(MaterialTheme.colorScheme.background)
     ) {
         Column {
             HeaderView(
@@ -75,7 +75,7 @@ fun HomeScreen() {
             )
             ListedBikes(
                 context,
-                SampleData().sampleBikes
+                bikeList
             )
         }
     }
@@ -89,8 +89,8 @@ fun ListedBikes(context: Context, sampleBikes: List<Vehicle>) {
             .padding(horizontal = 16.dp, vertical = 8.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
-        items(sampleBikes.size) { bike ->
-            BikeCard(sampleBikes[bike])
+        items(sampleBikes.size) { index ->
+            BikeCard(sampleBikes[index])
         }
     }
 }
@@ -102,11 +102,9 @@ fun BikeCard(vehicle: Vehicle) {
         modifier = Modifier
             .fillMaxWidth()
             .padding(bottom = 4.dp),
-        elevation = CardDefaults.cardElevation(
-            defaultElevation = 8.dp
-        ),
+        elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
         colors = CardDefaults.cardColors(
-            containerColor = Color.White
+            containerColor = MaterialTheme.colorScheme.surface
         )
     ) {
         Row(
@@ -115,7 +113,7 @@ fun BikeCard(vehicle: Vehicle) {
         ) {
             Image(
                 painter = rememberAsyncImagePainter(vehicle.imageUrl),
-                contentDescription = vehicle.brand,
+                contentDescription = vehicle.type,
                 modifier = Modifier
                     .size(120.dp)
                     .clip(RoundedCornerShape(12.dp))
@@ -125,17 +123,24 @@ fun BikeCard(vehicle: Vehicle) {
             Column(
                 verticalArrangement = Arrangement.SpaceBetween
             ) {
-                Text(text = vehicle.brand, fontSize = 20.sp, fontWeight = FontWeight.Bold)
-               // Text(text = vehicle.type, color = Color.Gray)
-                Text(text = "Plate: ${vehicle.numberPlate}", color = Color.DarkGray)
                 Text(
-                    text = "Parking: ${vehicle.currentLocation.parkingArea}",
-                    color = Color.DarkGray
+                    text = vehicle.type,
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.onSurface
+                )
+                Text(
+                    text = "Plate: ${vehicle.numberPlate}",
+                    color = MaterialTheme.colorScheme.onSurface
+                )
+                Text(
+                    text = "Parking: ${vehicle.locationName}",
+                    color = MaterialTheme.colorScheme.onSurface
                 )
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Text(
                         text = "₹${vehicle.pricePerKm} / km",
-                        color = Color.Green,
+                        color = MaterialTheme.colorScheme.onSurface,
                         fontWeight = FontWeight.SemiBold,
                         modifier = Modifier.weight(1f)
                     )
@@ -143,17 +148,17 @@ fun BikeCard(vehicle: Vehicle) {
                         onClick = { },
                         shape = RoundedCornerShape(32),
                         modifier = Modifier.padding(vertical = 4.dp),
-                        colors = ButtonDefaults.buttonColors(containerColor = PrimaryOrange)
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = MaterialTheme.colorScheme.primary
+                        )
                     ) {
                         Text(
                             text = "Book",
-                            color = Color.White,
+                            color = MaterialTheme.colorScheme.onPrimary,
                             fontSize = 14.sp,
                             modifier = Modifier.padding(horizontal = 12.dp)
                         )
                     }
-
-
                 }
             }
         }
@@ -168,14 +173,13 @@ fun HeaderView(
     user_filter_choice: Int,
     user_search: String
 ) {
-    val fontAwesome = FontFamily(
-        Font(R.font.font_awesome_solid) // assuming you placed fa_solid.otf in res/font/
-    )
+    val fontAwesome = FontFamily(Font(R.font.font_awesome_solid))
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .background(color = AppBackground)
-            .padding(horizontal = 24.dp), contentAlignment = Alignment.Center
+            .background(MaterialTheme.colorScheme.background)
+            .padding(horizontal = 24.dp),
+        contentAlignment = Alignment.Center
     ) {
         Column(modifier = Modifier.align(alignment = Alignment.CenterStart)) {
             Text(
@@ -183,7 +187,7 @@ fun HeaderView(
                 text = user_name,
                 fontWeight = FontWeight.SemiBold,
                 fontSize = 24.sp,
-                color = TextPrimary
+                color = MaterialTheme.colorScheme.onBackground
             )
             Spacer(modifier = Modifier.height(3.dp))
 
@@ -192,7 +196,7 @@ fun HeaderView(
                 text = user_current_location,
                 fontWeight = FontWeight.Normal,
                 fontSize = 12.sp,
-                color = TextSecondary
+                color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7f)
             )
             Spacer(modifier = Modifier.height(6.dp))
 
@@ -201,9 +205,9 @@ fun HeaderView(
             Row(
                 modifier = Modifier
                     .align(alignment = Alignment.Start)
-                    .height(56.dp) // slightly bigger
+                    .height(56.dp)
                     .padding(bottom = 4.dp),
-                verticalAlignment = Alignment.CenterVertically // VERY IMPORTANT
+                verticalAlignment = Alignment.CenterVertically
             ) {
                 SearchBar(
                     searchQuery = searchQuery,
@@ -215,34 +219,34 @@ fun HeaderView(
                 Box(
                     contentAlignment = Alignment.Center,
                     modifier = Modifier
-                        .size(52.dp) // little bigger button
+                        .size(52.dp)
                         .padding(start = 6.dp)
                         .background(
-                            color = Color(0xFFF0F0F0),
+                            color = MaterialTheme.colorScheme.surfaceVariant,
                             shape = RoundedCornerShape(12.dp)
                         )
                         .clickable {
-                            Toast.makeText(context, "gd", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, "Filter", Toast.LENGTH_SHORT).show()
                         }
                 ) {
                     Text(
                         text = "\uf0b0",
                         fontFamily = fontAwesome,
-                        color = TextSecondary,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
                         fontSize = 20.sp,
                         textAlign = TextAlign.Center
                     )
                 }
             }
-
-
         }
     }
 }
 
 @Composable
 fun SearchBar(
-    searchQuery: String, onSearchQueryChanged: (String) -> Unit, modifier: Modifier = Modifier
+    searchQuery: String,
+    onSearchQueryChanged: (String) -> Unit,
+    modifier: Modifier = Modifier
 ) {
     val fontAwesome = FontFamily(Font(R.font.font_awesome_solid))
 
@@ -251,14 +255,14 @@ fun SearchBar(
         onValueChange = onSearchQueryChanged,
         singleLine = true,
         textStyle = TextStyle(
-            color = Color.Black,
+            color = MaterialTheme.colorScheme.onBackground,
             fontSize = 16.sp,
             fontWeight = FontWeight.Normal
         ),
         modifier = modifier
             .fillMaxWidth()
             .background(
-                color = Color(0xFFF0F0F0),
+                color = MaterialTheme.colorScheme.surfaceVariant,
                 shape = RoundedCornerShape(12.dp)
             )
             .padding(horizontal = 16.dp, vertical = 10.dp),
@@ -270,7 +274,7 @@ fun SearchBar(
                     text = "\uF002",
                     fontFamily = fontAwesome,
                     fontSize = 16.sp,
-                    color = TextSecondary
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
                 Spacer(modifier = Modifier.width(12.dp))
 
@@ -278,7 +282,7 @@ fun SearchBar(
                     if (searchQuery.isEmpty()) {
                         Text(
                             text = "Search bikes, locations...",
-                            color = TextSecondary,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
                             fontSize = 14.sp
                         )
                     }
@@ -292,22 +296,23 @@ fun SearchBar(
 @Preview(showBackground = true, showSystemUi = false)
 @Composable
 fun MainListScreenPreview() {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(AppBackground)
-    ) {
-        HeaderView(
-            context = LocalContext.current,
-            user_name = "Yash",
-            user_current_location = "Campus",
-            user_filter_choice = 2,
-            user_search = "Electric Bikes"
-        )
-        ListedBikes(
-            context = LocalContext.current,
-            SampleData().sampleBikes
-        )
+    MaterialTheme {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(MaterialTheme.colorScheme.background)
+        ) {
+            HeaderView(
+                context = LocalContext.current,
+                user_name = "Yash",
+                user_current_location = "Campus",
+                user_filter_choice = 2,
+                user_search = "Electric Bikes"
+            )
+            ListedBikes(
+                context = LocalContext.current,
+                SampleData().sampleBikes
+            )
+        }
     }
 }
-

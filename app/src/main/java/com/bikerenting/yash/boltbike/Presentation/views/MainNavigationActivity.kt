@@ -4,10 +4,8 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemDefaults
@@ -17,7 +15,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
@@ -26,12 +23,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.bikerenting.yash.boltbike.Domain.Model.MainNavigationItems
-import com.bikerenting.yash.boltbike.Presentation.AppBackground
 import com.bikerenting.yash.boltbike.Presentation.BoltBikeTheme
-import com.bikerenting.yash.boltbike.Presentation.MutedComponents
-import com.bikerenting.yash.boltbike.Presentation.PrimaryOrange
-import com.bikerenting.yash.boltbike.Presentation.ui.BookingsScreen
-import com.bikerenting.yash.boltbike.Presentation.ui.ExploreScreen
 import com.bikerenting.yash.boltbike.Presentation.ui.HomeScreen
 import com.bikerenting.yash.boltbike.Presentation.ui.ProfileScreen
 import com.bikerenting.yash.boltbike.R
@@ -43,7 +35,7 @@ class MainNavigationActivity : ComponentActivity() {
         setContent {
             val navController = rememberNavController()
 
-            BoltBikeTheme {
+            BoltBikeTheme(dynamicColor = false) {
                 Scaffold(
                     bottomBar = {
                         BottomNavigationBar(navController = navController)
@@ -72,7 +64,7 @@ class MainNavigationActivity : ComponentActivity() {
             Font(R.font.font_awesome_solid) // assuming you placed fa_solid.otf in res/font/
         )
         NavigationBar(
-            containerColor = AppBackground,
+            containerColor = MaterialTheme.colorScheme.background,
             tonalElevation = 8.dp
         ) {
             val currentBackStackEntry = navController.currentBackStackEntryAsState().value
@@ -97,21 +89,27 @@ class MainNavigationActivity : ComponentActivity() {
                             text = item.icon,
                             fontFamily = fontAwesome,
                             fontSize = 20.sp,
-                            color = if (selected) PrimaryOrange else MutedComponents
+                            color = if (selected)
+                                MaterialTheme.colorScheme.primary
+                            else
+                                MaterialTheme.colorScheme.onBackground
                         )
                     },
                     label = {
                         Text(
                             text = item.label,
-                            color = if (selected) PrimaryOrange else MutedComponents
+                            color = if (selected)
+                                MaterialTheme.colorScheme.primary
+                            else
+                                MaterialTheme.colorScheme.onBackground
                         )
                     },
                     colors = NavigationBarItemDefaults.colors(
-                        indicatorColor = PrimaryOrange.copy(alpha = 0.1f), // subtle background for selected
-                        selectedIconColor = PrimaryOrange,
-                        unselectedIconColor = MutedComponents,
-                        selectedTextColor = PrimaryOrange,
-                        unselectedTextColor = MutedComponents
+                        indicatorColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.1f),
+                        selectedIconColor = MaterialTheme.colorScheme.primary,
+                        unselectedIconColor = MaterialTheme.colorScheme.onBackground,
+                        selectedTextColor = MaterialTheme.colorScheme.primary,
+                        unselectedTextColor = MaterialTheme.colorScheme.onBackground
                     )
                 )
             }
