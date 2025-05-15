@@ -26,7 +26,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
 
         setContent {
-            BoltBikeTheme {
+            BoltBikeTheme(dynamicColor = false)  {
                 val isSplashDone by splashViewModel.isSplashDone
 
                 Scaffold(modifier = Modifier.fillMaxSize()) {

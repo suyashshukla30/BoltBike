@@ -30,8 +30,11 @@ import com.bikerenting.yash.boltbike.Presentation.DividerGray
 import com.bikerenting.yash.boltbike.Presentation.TextSecondary
 import com.bikerenting.yash.boltbike.R
 import androidx.compose.foundation.interaction.collectIsFocusedAsState
+import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.text.TextStyle
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.bikerenting.yash.boltbike.Presentation.AppBackground
 import com.bikerenting.yash.boltbike.Presentation.BorderGray
 import com.bikerenting.yash.boltbike.Presentation.PrimaryOrange
@@ -41,7 +44,8 @@ import com.bikerenting.yash.boltbike.Presentation.views.MainNavigationActivity
 
 @Composable
 fun LoginScreen() {
-    val viewModel = remember { LoginViewModel() }
+    val viewModel: LoginViewModel = viewModel()
+
 
     val phoneNumber by viewModel.phoneNumber.collectAsState()
     val otpCode by viewModel.otpCode.collectAsState()
@@ -95,7 +99,8 @@ fun LoginContent(
 ) {
     val interactionSource = remember { MutableInteractionSource() }
     val isFocused by interactionSource.collectIsFocusedAsState()
-    val borderColor = if (isFocused) PrimaryOrange else BorderGray
+    val borderColor = if (isFocused) MaterialTheme.colorScheme.primary else BorderGray
+    val icon_image = if (isSystemInDarkTheme()) R.drawable.dark_mode_icon else R.drawable.main_icon_inverse
 
     val rotationAngle by animateFloatAsState(
         targetValue = if (isOtpPhase) 180f else 0f, animationSpec = tween(1000), label = "rotationY"
@@ -107,7 +112,7 @@ fun LoginContent(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(color = AppBackground)
+            .background(color = MaterialTheme.colorScheme.background)
             .padding(horizontal = 24.dp), contentAlignment = Alignment.Center
     ) {
         Column(
@@ -117,7 +122,7 @@ fun LoginContent(
             Spacer(modifier = Modifier.height(24.dp))
 
             Image(
-                painter = painterResource(id = R.drawable.main_icon_inverse),
+                painter = painterResource(id = icon_image),
                 contentDescription = "RideOn Logo",
                 modifier = Modifier
                     .size(110.dp)
@@ -128,7 +133,7 @@ fun LoginContent(
                 text = stringResource(R.string.app_name),
                 fontSize = 40.sp,
                 fontWeight = FontWeight.Bold,
-                color = TextPrimary
+                color = MaterialTheme.colorScheme.onSecondary
             )
 
             Spacer(modifier = Modifier.height(12.dp))
@@ -137,7 +142,7 @@ fun LoginContent(
                 text = if (isOtpPhase) "Verify" else stringResource(R.string.login),
                 fontSize = 22.sp,
                 fontWeight = FontWeight.SemiBold,
-                color = TextPrimary
+                color = MaterialTheme.colorScheme.onSecondary
             )
 
             // 3D Flip Effect
@@ -175,7 +180,7 @@ fun LoginContent(
                     .height(50.dp),
                 shape = RoundedCornerShape(12.dp),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = PrimaryOrange, contentColor = AppBackground
+                    containerColor = MaterialTheme.colorScheme.primary, contentColor = MaterialTheme.colorScheme.background
                 )
             ) {
                 CommonLoader().LoaderButtonContent(
@@ -203,12 +208,12 @@ fun PhoneNumberInput(
             .height(56.dp)
             .clip(RoundedCornerShape(12.dp))
             .border(2.dp, borderColor, RoundedCornerShape(12.dp))
-            .background(color = AppBackground)
+            .background(color = MaterialTheme.colorScheme.background)
             .padding(horizontal = 16.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
-            text = "IN (+91)", fontWeight = FontWeight.SemiBold, fontSize = 14.sp, color = TextPrimary
+            text = "IN (+91)", fontWeight = FontWeight.SemiBold, fontSize = 14.sp, color = MaterialTheme.colorScheme.onSecondary
         )
 
         Spacer(modifier = Modifier.width(12.dp))
@@ -224,7 +229,7 @@ fun PhoneNumberInput(
         OutlinedTextField(
             value = phoneNumber,
             onValueChange = onPhoneNumberChange,
-            placeholder = { Text("Enter phone number", color = TextSecondary) },
+            placeholder = { Text("Enter phone number", color = MaterialTheme.colorScheme.onSecondary) },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
             singleLine = true,
             textStyle = TextStyle(color = Color.Black),
@@ -252,7 +257,7 @@ fun OtpInputField(
         onValueChange = {
             if (it.length <= 6) onOtpChange(it)
         },
-        placeholder = { Text("Enter OTP", color = TextSecondary) },
+        placeholder = { Text("Enter OTP", color = MaterialTheme.colorScheme.onSecondary) },
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
         singleLine = true,
         textStyle = TextStyle(color = Color.Black),
@@ -261,7 +266,7 @@ fun OtpInputField(
             .height(56.dp)
             .clip(RoundedCornerShape(12.dp))
             .border(2.dp, borderColor, RoundedCornerShape(12.dp))
-            .background(color = AppBackground)
+            .background(color = MaterialTheme.colorScheme.background)
             .padding(horizontal = 16.dp),
         interactionSource = interactionSource,
         colors = OutlinedTextFieldDefaults.colors(
