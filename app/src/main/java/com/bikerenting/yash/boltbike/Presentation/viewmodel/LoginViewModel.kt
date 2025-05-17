@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 import java.util.concurrent.TimeUnit
 
 class LoginViewModel : ViewModel() {
@@ -33,7 +34,7 @@ class LoginViewModel : ViewModel() {
     private val _isLoading = MutableStateFlow(false)
     val isLoading: StateFlow<Boolean> = _isLoading
 
-    private val _navigateToHome = MutableSharedFlow<Unit>()
+    private val _navigateToHome = MutableSharedFlow<String>()
     val navigateToHome = _navigateToHome.asSharedFlow()
 
 
@@ -102,9 +103,14 @@ class LoginViewModel : ViewModel() {
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     viewModelScope.launch {
-                        _navigateToHome.emit(Unit)
-                        _toastMessage.emit("WELCOME")
-                        _isLoading.value = false
+                        val result =
+                            FirebaseAuth.getInstance().currentUser?.getIdToken(true)?.await()
+                        if (result != null) {
+                            val idToken = (result.token).toString()
+                            _navigateToHome.emit(idToken)
+                            _toastMessage.emit("WELCOME")
+                            _isLoading.value = false
+                        }
                     }
                 } else {
                     _isLoading.value = false
