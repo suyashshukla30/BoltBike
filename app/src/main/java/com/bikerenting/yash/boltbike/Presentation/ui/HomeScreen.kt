@@ -58,7 +58,7 @@ fun HomeScreen() {
 
     val bikeList by home_view_model.bikes.collectAsState()
     LaunchedEffect(Unit) {
-        home_view_model.getBikeList() // Fetch bikes on first composition
+        home_view_model.getBikeList()
     }
     Box(
         modifier = Modifier

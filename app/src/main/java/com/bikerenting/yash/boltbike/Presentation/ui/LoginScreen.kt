@@ -63,8 +63,9 @@ fun LoginScreen() {
         }
     }
     LaunchedEffect(Unit) {
-        viewModel.navigateToHome.collect {
-            val intent = Intent(context, MainNavigationActivity::class.java)
+        viewModel.navigateToHome.collect { token ->
+            val intent = Intent(context, UserProfile::class.java)
+            intent.putExtra("Firebase_login_token", token)
             context.startActivity(intent)
             (context as Activity).finish()
         }
