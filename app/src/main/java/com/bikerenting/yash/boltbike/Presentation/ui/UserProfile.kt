@@ -64,15 +64,15 @@ class UserProfile : AppCompatActivity() {
                     token = "Bearer $firebaseToken",
                     user = user
                 )
-                if (response.isSuccessful) {
+                if (response.body()!!.contains("registered successfully")) {
                     val intent = Intent(this@UserProfile, MainNavigationActivity::class.java)
                     this@UserProfile.startActivity(intent)
                     this@UserProfile.finish()
                 } else {
-                    Log.e("API", "Error: ${response.errorBody()?.string()}")
+                    Log.e("API_suyash", "Error: ${response.errorBody()?.string()}")
                 }
             } catch (e: Exception) {
-                Log.e("API", "Exception: ${e.localizedMessage}")
+                Log.e("API_suyash", "Exception: ${e.localizedMessage}")
             }
         }
     }
