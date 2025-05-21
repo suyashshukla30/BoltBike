@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -12,6 +13,7 @@ import com.bikerenting.yash.boltbike.Domain.Remote.ApiClient.apiService
 import com.bikerenting.yash.boltbike.Presentation.views.MainNavigationActivity
 import com.bikerenting.yash.boltbike.R
 import com.bikerenting.yash.boltbike.databinding.ActivityUserProfileBinding
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.json.JSONObject
@@ -50,8 +52,10 @@ class UserProfile : AppCompatActivity() {
         phone: String,
         email: String
     ) {
+        val firebaseUser = FirebaseAuth.getInstance().currentUser
+        val uid = firebaseUser?.uid ?: throw IllegalStateException("No Firebase user")
         val user = UserRequest(
-            uid = phone,
+            uid = uid,
             phoneNumber = phone,
             name = name,
             email = email
@@ -64,16 +68,17 @@ class UserProfile : AppCompatActivity() {
                     token = "Bearer $firebaseToken",
                     user = user
                 )
-                if (response.body()!!.contains("registered successfully")) {
+                if (response.isSuccessful) {
                     val intent = Intent(this@UserProfile, MainNavigationActivity::class.java)
                     this@UserProfile.startActivity(intent)
                     this@UserProfile.finish()
                 } else {
-                    Log.e("API_suyash", "Error: ${response.errorBody()?.string()}")
+                    Toast.makeText(this@UserProfile, response.body()?.message, Toast.LENGTH_SHORT).show()
                 }
             } catch (e: Exception) {
                 Log.e("API_suyash", "Exception: ${e.localizedMessage}")
             }
+
         }
     }
 }
