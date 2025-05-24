@@ -8,7 +8,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.bikerenting.yash.boltbike.Domain.Remote.ApiClient.apiService
+import com.bikerenting.yash.boltbike.Data.Remote.ApiClient.apiService
 import com.bikerenting.yash.boltbike.Presentation.views.MainNavigationActivity
 import com.bikerenting.yash.boltbike.R
 import com.bikerenting.yash.boltbike.databinding.ActivityUserProfileBinding
@@ -66,6 +66,7 @@ class UserProfile : AppCompatActivity() {
                 )
                 if (response.body()!!.contains("registered successfully")) {
                     val intent = Intent(this@UserProfile, MainNavigationActivity::class.java)
+
                     this@UserProfile.startActivity(intent)
                     this@UserProfile.finish()
                 } else {

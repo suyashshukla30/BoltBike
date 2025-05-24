@@ -4,7 +4,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bikerenting.yash.boltbike.Domain.Model.Vehicle
-import com.bikerenting.yash.boltbike.Domain.Remote.ApiClient
+import com.bikerenting.yash.boltbike.Data.Remote.ApiClient
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
