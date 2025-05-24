@@ -2,7 +2,7 @@
 _A bike renting app_
 
 ## Follow below pattern when making classes(please 😊)
-`
+
 - core/
     - SampleData.kt
 
@@ -30,4 +30,3 @@ _A bike renting app_
         - Activity1.kt
     - viewmodel/
         - ViewModel1.kt
-`
