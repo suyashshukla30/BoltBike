@@ -1,4 +1,4 @@
-package com.bikerenting.yash.boltbike.Domain.Remote
+package com.bikerenting.yash.boltbike.Data.Remote
 
 import com.bikerenting.yash.boltbike.Domain.Model.Vehicle
 import com.bikerenting.yash.boltbike.Presentation.ui.UserRequest
