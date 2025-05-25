@@ -1,6 +1,5 @@
 package com.bikerenting.yash.boltbike.Presentation.ui
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -8,13 +7,14 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.lifecycleScope
+import com.bikerenting.yash.boltbike.Core.MyApp
+import com.bikerenting.yash.boltbike.Data.Local.UserEntity
 import com.bikerenting.yash.boltbike.Data.Remote.ApiClient.apiService
 import com.bikerenting.yash.boltbike.Presentation.views.MainNavigationActivity
 import com.bikerenting.yash.boltbike.R
 import com.bikerenting.yash.boltbike.databinding.ActivityUserProfileBinding
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import org.json.JSONObject
 
 
 class UserProfile : AppCompatActivity() {
@@ -58,7 +58,7 @@ class UserProfile : AppCompatActivity() {
         )
 
         //Delicate Api call
-        GlobalScope.launch {
+        lifecycleScope.launch {
             try {
                 val response = apiService.registerNewUser(
                     token = "Bearer $firebaseToken",
@@ -66,7 +66,7 @@ class UserProfile : AppCompatActivity() {
                 )
                 if (response.body()!!.contains("registered successfully")) {
                     val intent = Intent(this@UserProfile, MainNavigationActivity::class.java)
-
+                    (applicationContext as MyApp).database.appDao().insertUser(user.toEntity())
                     this@UserProfile.startActivity(intent)
                     this@UserProfile.finish()
                 } else {
@@ -77,4 +77,13 @@ class UserProfile : AppCompatActivity() {
             }
         }
     }
+    fun UserRequest.toEntity(): UserEntity {
+        return UserEntity(
+            uid = this.uid,
+            phoneNumber = this.phoneNumber,
+            name = this.name,
+            email = this.email
+        )
+    }
+
 }
