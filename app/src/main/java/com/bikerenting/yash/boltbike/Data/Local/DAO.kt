@@ -8,5 +8,5 @@ import androidx.room.OnConflictStrategy
 interface DAO {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertUser(user: UserEntity)
+    suspend fun insertUser(user: UserEntity):Long
 }

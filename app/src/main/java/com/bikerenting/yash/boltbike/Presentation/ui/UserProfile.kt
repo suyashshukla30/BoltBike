@@ -66,9 +66,11 @@ class UserProfile : AppCompatActivity() {
                 )
                 if (response.body()!!.contains("registered successfully")) {
                     val intent = Intent(this@UserProfile, MainNavigationActivity::class.java)
-                    (applicationContext as MyApp).database.appDao().insertUser(user.toEntity())
-                    this@UserProfile.startActivity(intent)
-                    this@UserProfile.finish()
+                    val result = (applicationContext as MyApp).database.appDao().insertUser(user.toEntity())
+                    if(result != -1L) {
+                        this@UserProfile.startActivity(intent)
+                        this@UserProfile.finish()
+                    }
                 } else {
                     Log.e("API_suyash", "Error: ${response.errorBody()?.string()}")
                 }
