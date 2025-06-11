@@ -9,13 +9,15 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 class ProfileMainScreenViewModel : ViewModel() {
-    private val _isAvailableData = MutableStateFlow<List<Boolean>>(emptyList())
+    private val _isAvailableData = MutableStateFlow<List<Boolean>>(
+        listOf(true, true, true, true, true, true)
+    )
     val isAvailableData: StateFlow<List<Boolean>> = _isAvailableData
     fun updateIsAvailableData() {
         viewModelScope.launch {
             try {
-                val response =  ApiClient.apiService.getAvailableProfileFeature()
-                if(response.isSuccessful){
+                val response = ApiClient.apiService.getAvailableProfileFeature()
+                if (response.isSuccessful) {
                     response.body()?.let {
                         _isAvailableData.value = it
                     }

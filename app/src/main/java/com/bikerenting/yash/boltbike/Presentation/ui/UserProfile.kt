@@ -14,6 +14,7 @@ import com.bikerenting.yash.boltbike.Data.Remote.ApiClient.apiService
 import com.bikerenting.yash.boltbike.Presentation.views.MainNavigationActivity
 import com.bikerenting.yash.boltbike.R
 import com.bikerenting.yash.boltbike.databinding.ActivityUserProfileBinding
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 
@@ -58,7 +59,7 @@ class UserProfile : AppCompatActivity() {
         )
 
         //Delicate Api call
-        lifecycleScope.launch {
+        GlobalScope.launch {
             try {
                 val response = apiService.registerNewUser(
                     token = "Bearer $firebaseToken",
