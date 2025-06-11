@@ -65,7 +65,7 @@ class UserProfile : AppCompatActivity() {
                     token = "Bearer $firebaseToken",
                     user = user
                 )
-                if (response.body()!!.contains("registered successfully")) {
+                if (response.body()!!.message.contains("registered successfully")) {
                     val intent = Intent(this@UserProfile, MainNavigationActivity::class.java)
                     val result = (applicationContext as MyApp).database.appDao().insertUser(user.toEntity())
                     if(result != -1L) {

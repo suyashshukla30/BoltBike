@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import com.bikerenting.yash.boltbike.Presentation.BoltBikeTheme
 import com.bikerenting.yash.boltbike.Presentation.ui.LoginScreen
 import com.bikerenting.yash.boltbike.Presentation.ui.SplashScreen
+import com.bikerenting.yash.boltbike.Presentation.ui.UserProfile
 import com.bikerenting.yash.boltbike.Presentation.viewmodel.SplashViewModel
 import com.google.firebase.auth.FirebaseAuth
 
@@ -35,7 +36,7 @@ class MainActivity : ComponentActivity() {
                     } else {
                         val currentUser = FirebaseAuth.getInstance().currentUser
                         if(currentUser != null){
-                            val intent = Intent(this, MainNavigationActivity::class.java)
+                            val intent = Intent(this, UserProfile::class.java)
                             startActivity(intent)
                             this.finish()
                         } else {

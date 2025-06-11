@@ -1,5 +1,6 @@
 package com.bikerenting.yash.boltbike.Data.Remote
 
+import com.bikerenting.yash.boltbike.Domain.Model.RegisterResponse
 import com.bikerenting.yash.boltbike.Domain.Model.Vehicle
 import com.bikerenting.yash.boltbike.Presentation.ui.UserRequest
 import retrofit2.Response
@@ -19,5 +20,5 @@ interface ApiService {
     suspend fun registerNewUser(
         @Header("Authorization") token: String,
         @Body user: UserRequest
-    ): Response<String>
+    ): Response<RegisterResponse>
 }
