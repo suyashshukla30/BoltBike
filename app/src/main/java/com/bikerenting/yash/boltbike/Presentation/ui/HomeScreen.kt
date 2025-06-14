@@ -49,16 +49,21 @@ import com.bikerenting.yash.boltbike.Domain.Model.Vehicle
 import com.bikerenting.yash.boltbike.Presentation.viewmodel.HomeViewModel
 import com.bikerenting.yash.boltbike.Presentation.viewmodel.MainListingViewModel
 import com.bikerenting.yash.boltbike.R
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun HomeScreen() {
+fun HomeScreen(
+) {
     val bike_list_ViewModel = remember { MainListingViewModel() }
     val context = LocalContext.current
-    val home_view_model = remember { HomeViewModel() }
-
+    val home_view_model: HomeViewModel = koinViewModel()
     val bikeList by home_view_model.bikes.collectAsState()
+    val userDetail by home_view_model.userData.collectAsState()
     LaunchedEffect(Unit) {
         home_view_model.getBikeList()
+    }
+    LaunchedEffect(Unit) {
+        home_view_model.getUserDetail()
     }
     Box(
         modifier = Modifier
@@ -68,7 +73,7 @@ fun HomeScreen() {
         Column {
             HeaderView(
                 context,
-                user_name = "Yash",
+                user_name = userDetail.name ?: "GUEST",
                 user_current_location = "Campus",
                 user_filter_choice = 2,
                 user_search = "Electric Bikes"

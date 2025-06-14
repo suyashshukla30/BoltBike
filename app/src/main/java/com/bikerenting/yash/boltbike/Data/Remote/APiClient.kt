@@ -8,7 +8,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 object ApiClient {
     private const val IS_DEBUG_BUILD = true
 
-    private const val BASE_URL_DEBUG = "http://192.168.1.5:8080"
+    private const val BASE_URL_DEBUG = "http://192.168.1.6:8080"
     private const val BASE_URL_PROD = "https://boltbike-backend.onrender.com"
     private val BASE_URL : String = if(IS_DEBUG_BUILD){
         BASE_URL_DEBUG

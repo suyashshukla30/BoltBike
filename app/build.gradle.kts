@@ -72,7 +72,11 @@ dependencies {
 
     ksp("androidx.room:room-compiler:2.7.1")
 
+    implementation("io.insert-koin:koin-android:3.5.3")
+    implementation("io.insert-koin:koin-androidx-compose:3.5.3")
+    implementation("io.insert-koin:koin-androidx-navigation:3.5.3")
 
+    ksp(libs.androidx.hilt.compiler)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))
