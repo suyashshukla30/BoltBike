@@ -14,4 +14,7 @@ interface DAO {
 
     @Query("SELECT * FROM user LIMIT 1")
     fun getUser(): Flow<UserEntity>
+
+    @Query("UPDATE user SET lastLat = :lastLat, lastLng = :lastLng, locationTimestamp = :locationTimestamp WHERE uid = :uid")
+    suspend fun updateLocation(uid: String, lastLat: Double, lastLng: Double, locationTimestamp: String): Int
 }

@@ -1,6 +1,5 @@
 package com.bikerenting.yash.boltbike.Core
 
-import com.bikerenting.yash.boltbike.Domain.Model.Location
 import com.bikerenting.yash.boltbike.Domain.Model.Vehicle
 
 public class SampleData {
