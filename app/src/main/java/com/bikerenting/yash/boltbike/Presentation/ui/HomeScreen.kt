@@ -75,7 +75,7 @@ fun HomeScreen(
                 Manifest.permission.ACCESS_FINE_LOCATION
             ) == PackageManager.PERMISSION_GRANTED
         ) {
-            if (home_view_model.isUserLocationStale()) {
+            if (home_view_model.isUserLocationStale(userDetail.locationTimestamp, userDetail.lastLat, userDetail.lastLng)) {
                 home_view_model.fetchAndUpdateLocation(context)
             }
         }

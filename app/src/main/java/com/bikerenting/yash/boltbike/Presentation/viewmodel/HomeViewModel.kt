@@ -9,11 +9,9 @@ import com.bikerenting.yash.boltbike.Core.LocationHelper
 import com.bikerenting.yash.boltbike.Data.Local.DAO
 import com.bikerenting.yash.boltbike.Domain.Model.Vehicle
 import com.bikerenting.yash.boltbike.Data.Remote.ApiClient
-import com.bikerenting.yash.boltbike.Domain.Model.Locations
 import com.bikerenting.yash.boltbike.Domain.Model.User
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.launch
 import java.util.Locale
 
@@ -63,12 +61,11 @@ class HomeViewModel(
         }
     }
 
-    fun isUserLocationStale(): Boolean {
+    fun isUserLocationStale(locationTimestamp: String?, lastLat: Double?, lastLng: Double?): Boolean {
         val user = _userData.value
-        val locationTimestamp = user.locationTimestamp ?: return true
-        val isLatLngZero = user.lastLat == 0.0 && user.lastLng == 0.0
-        val isOld = true
-        return isLatLngZero || isOld
+        val locationTimestamp1 = locationTimestamp ?: getCurrentTimeISO()
+        val isLatLngZero = lastLat == 0.0 && lastLng == 0.0
+        return isLatLngZero || (locationTimestamp1 != getCurrentTimeISO())
     }
 
     fun fetchAndUpdateLocation(context: Context) {
