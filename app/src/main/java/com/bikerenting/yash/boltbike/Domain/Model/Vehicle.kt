@@ -13,8 +13,3 @@ data class Vehicle(
     val status: String,
     val imageUrl: String
 )
-data class Location(
-    val lat: Double,
-    val lng: Double,
-    val parkingArea: String
-)

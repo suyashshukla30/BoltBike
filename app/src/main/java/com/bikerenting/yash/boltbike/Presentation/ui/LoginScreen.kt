@@ -101,7 +101,8 @@ fun LoginContent(
     val interactionSource = remember { MutableInteractionSource() }
     val isFocused by interactionSource.collectIsFocusedAsState()
     val borderColor = if (isFocused) MaterialTheme.colorScheme.primary else BorderGray
-    val icon_image = if (isSystemInDarkTheme()) R.drawable.dark_mode_icon else R.drawable.main_icon_inverse
+    val icon_image =
+        if (isSystemInDarkTheme()) R.drawable.dark_mode_icon else R.drawable.main_icon_inverse
 
     val rotationAngle by animateFloatAsState(
         targetValue = if (isOtpPhase) 180f else 0f, animationSpec = tween(1000), label = "rotationY"
@@ -181,7 +182,8 @@ fun LoginContent(
                     .height(50.dp),
                 shape = RoundedCornerShape(12.dp),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = MaterialTheme.colorScheme.primary, contentColor = MaterialTheme.colorScheme.background
+                    containerColor = MaterialTheme.colorScheme.primary,
+                    contentColor = MaterialTheme.colorScheme.background
                 )
             ) {
                 CommonLoader().LoaderButtonContent(
@@ -214,7 +216,10 @@ fun PhoneNumberInput(
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
-            text = "IN (+91)", fontWeight = FontWeight.SemiBold, fontSize = 14.sp, color = MaterialTheme.colorScheme.onSecondary
+            text = "IN (+91)",
+            fontWeight = FontWeight.SemiBold,
+            fontSize = 14.sp,
+            color = MaterialTheme.colorScheme.onSecondary
         )
 
         Spacer(modifier = Modifier.width(12.dp))
@@ -230,7 +235,12 @@ fun PhoneNumberInput(
         OutlinedTextField(
             value = phoneNumber,
             onValueChange = onPhoneNumberChange,
-            placeholder = { Text("Enter phone number", color = MaterialTheme.colorScheme.onSecondary) },
+            placeholder = {
+                Text(
+                    "Enter phone number",
+                    color = MaterialTheme.colorScheme.onSecondary
+                )
+            },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
             singleLine = true,
             textStyle = TextStyle(color = Color.Black),

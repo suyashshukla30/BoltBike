@@ -7,7 +7,6 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.lifecycle.lifecycleScope
 import com.bikerenting.yash.boltbike.Core.MyApp
 import com.bikerenting.yash.boltbike.Data.Local.UserEntity
 import com.bikerenting.yash.boltbike.Data.Remote.ApiClient.apiService
@@ -31,6 +30,7 @@ class UserProfile : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+        MainListPage(0L)//Change , a check
         val firebase_token = intent.getStringExtra("Firebase_login_token")
         binding.nameTextView.text = " Yash Shukla "
         binding.mobileTextView.text = "+91 8957177658"
@@ -66,12 +66,9 @@ class UserProfile : AppCompatActivity() {
                     user = user
                 )
                 if (response.body()!!.message.contains("registered successfully")) {
-                    val intent = Intent(this@UserProfile, MainNavigationActivity::class.java)
                     val result = (applicationContext as MyApp).database.appDao().insertUser(user.toEntity())
-                    if(result != -1L) {
-                        this@UserProfile.startActivity(intent)
-                        this@UserProfile.finish()
-                    }
+                    MainListPage(result)
+
                 } else {
                     Log.e("API_suyash", "Error: ${response.errorBody()?.string()}")
                 }
@@ -80,6 +77,7 @@ class UserProfile : AppCompatActivity() {
             }
         }
     }
+
     fun UserRequest.toEntity(): UserEntity {
         return UserEntity(
             uid = this.uid,
@@ -89,4 +87,11 @@ class UserProfile : AppCompatActivity() {
         )
     }
 
+    fun MainListPage(result: Long) {
+        val intent = Intent(this@UserProfile, MainNavigationActivity::class.java)
+        if (result != -1L) {
+            this@UserProfile.startActivity(intent)
+            this@UserProfile.finish()
+        }
+    }
 }

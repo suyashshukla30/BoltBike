@@ -69,7 +69,7 @@ dependencies {
     implementation(libs.androidx.image.coil)
     testImplementation(libs.junit)
     implementation("androidx.room:room-runtime:2.7.1")
-
+    implementation("com.google.android.gms:play-services-location:21.0.1")
     ksp("androidx.room:room-compiler:2.7.1")
 
     implementation("io.insert-koin:koin-android:3.5.3")

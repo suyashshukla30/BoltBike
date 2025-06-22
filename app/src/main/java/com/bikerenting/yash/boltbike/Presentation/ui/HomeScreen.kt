@@ -1,6 +1,8 @@
 package com.bikerenting.yash.boltbike.Presentation.ui
 
+import android.Manifest
 import android.content.Context
+import android.content.pm.PackageManager
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -43,6 +45,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.content.ContextCompat
 import coil.compose.rememberAsyncImagePainter
 import com.bikerenting.yash.boltbike.Core.SampleData
 import com.bikerenting.yash.boltbike.Domain.Model.Vehicle
@@ -59,12 +62,25 @@ fun HomeScreen(
     val home_view_model: HomeViewModel = koinViewModel()
     val bikeList by home_view_model.bikes.collectAsState()
     val userDetail by home_view_model.userData.collectAsState()
+    val userAddress by home_view_model.address.collectAsState()
+
     LaunchedEffect(Unit) {
         home_view_model.getBikeList()
     }
     LaunchedEffect(Unit) {
         home_view_model.getUserDetail()
+
+        if (ContextCompat.checkSelfPermission(
+                context,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            if (home_view_model.isUserLocationStale(userDetail.locationTimestamp, userDetail.lastLat, userDetail.lastLng)) {
+                home_view_model.fetchAndUpdateLocation(context)
+            }
+        }
     }
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -74,7 +90,7 @@ fun HomeScreen(
             HeaderView(
                 context,
                 user_name = userDetail.name ?: "GUEST",
-                user_current_location = "Campus",
+                user_current_location = userAddress,
                 user_filter_choice = 2,
                 user_search = "Electric Bikes"
             )
